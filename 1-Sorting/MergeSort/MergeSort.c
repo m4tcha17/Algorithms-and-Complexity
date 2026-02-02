@@ -46,45 +46,47 @@ void mergeSort(int arr[], int start, int end){
     }
 }
 
-void merge(int arr[], int start, int mid, int end){
+void merge(int mainArr[], int start, int mid, int end){
     // Count for Array Indices
     int leftCount, rightCount, mainCount;
-    int n1 = mid - start + 1;
-    int n2 = end - mid;
+    // Size of Left Array
+    int sizeLeft = mid - start + 1;
+    // Size of Right Array
+    int sizeRight = end - mid;
 
-    int left[n1], right[n2];
+    int left[sizeLeft], right[sizeRight];
 
-    for(leftCount = 0; leftCount < n1; leftCount++){
-        left[leftCount] = arr[start + leftCount];
+    for(leftCount = 0; leftCount < sizeLeft; leftCount++){
+        left[leftCount] = mainArr[start + leftCount];
     }
-    for(rightCount = 0; rightCount < n2; rightCount++){
-        right[rightCount] = arr[mid + 1 + rightCount];
+    for(rightCount = 0; rightCount < sizeRight; rightCount++){
+        right[rightCount] = mainArr[mid + 1 + rightCount];
     }
 
     leftCount = 0;
     rightCount = 0;
     mainCount = start;
 
-    while(leftCount < n1 && rightCount < n2){
+    while(leftCount < sizeLeft && rightCount < sizeRight){
         if(left[leftCount] <= right[rightCount]){
-            arr[mainCount] = left[leftCount];
+            mainArr[mainCount] = left[leftCount];
             leftCount++;
         }
         else{
-            arr[mainCount] = right[rightCount];
+            mainArr[mainCount] = right[rightCount];
             rightCount++;
         }
         mainCount++;
     }
 
-    while(leftCount < n1){
-        arr[mainCount] = left[leftCount];
+    while(leftCount < sizeLeft){
+        mainArr[mainCount] = left[leftCount];
         leftCount++;
         mainCount++;
     }
 
-    while(leftCount < n1){
-        arr[mainCount] = right[rightCount];
+    while(leftCount < sizeLeft){
+        mainArr[mainCount] = right[rightCount];
         rightCount++;
         mainCount++;
     }
