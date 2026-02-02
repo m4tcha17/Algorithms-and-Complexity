@@ -38,7 +38,9 @@ void sort(int arr[], int size) {
 void mergeSort(int arr[], int start, int end){
     if(start < end){
         int mid = (start + end) / 2;
+        // Handles Recursion on left Half
         mergeSort(arr, start, mid);
+        // Handles Recursion on Right Half
         mergeSort(arr, mid + 1, end);
         merge(arr, start, mid, end);
     }
