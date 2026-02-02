@@ -34,6 +34,7 @@ void sort(int arr[], int size) {
     mergeSort(arr, 0, size - 1);
 }
 
+// Handles the Recursion of Merge Sort
 void mergeSort(int arr[], int start, int end){
     if(start < end){
         int mid = (start + end) / 2;
