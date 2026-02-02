@@ -58,7 +58,7 @@ Big O notation describes the upper bound of an algorithm's time or space complex
 - **Strategy:** Build max heap, repeatedly extract maximum
 
 ### Bubble Sort
-- **Time:** O(n²)
+- **Time:** O(n²) worst, O(n) best (if optimized with early termination)
 - **Space:** O(1)
 - **Strategy:** Repeatedly swap adjacent elements if out of order
 
@@ -66,6 +66,51 @@ Big O notation describes the upper bound of an algorithm's time or space complex
 - **Time:** O(n²) worst, O(n) best
 - **Space:** O(1)
 - **Strategy:** Build sorted array one element at a time
+
+### Selection Sort
+- **Time:** O(n²)
+- **Space:** O(1)
+- **Strategy:** Repeatedly find minimum element and place it at the beginning
+
+### Counting Sort
+- **Time:** O(n + k) where k is range of input
+- **Space:** O(k)
+- **Strategy:** Count occurrences of each value, calculate positions
+
+### Radix Sort
+- **Time:** O(d × (n + k)) where d is number of digits
+- **Space:** O(n + k)
+- **Strategy:** Sort by individual digits from least to most significant
+
+### Bucket Sort
+- **Time:** O(n + k) average, O(n²) worst
+- **Space:** O(n + k)
+- **Strategy:** Distribute elements into buckets, sort buckets individually
+
+### Shell Sort
+- **Time:** O(n log n) to O(n²) depending on gap sequence
+- **Space:** O(1)
+- **Strategy:** Generalized insertion sort using gap sequences
+
+### Gnome Sort
+- **Time:** O(n²) worst, O(n) best
+- **Space:** O(1)
+- **Strategy:** Similar to insertion sort but uses swaps like bubble sort
+
+### Strand Sort
+- **Time:** O(n²) worst, O(n) best
+- **Space:** O(n)
+- **Strategy:** Repeatedly extract sorted sublists and merge them
+
+### Tournament Sort
+- **Time:** O(n log n)
+- **Space:** O(n)
+- **Strategy:** Build tournament tree, repeatedly extract winners
+
+### Comb Sort
+- **Time:** O(n²) worst, O(n log n) average
+- **Space:** O(1)
+- **Strategy:** Improved bubble sort using gap sequences with shrink factor
 
 ## Search Algorithms
 
