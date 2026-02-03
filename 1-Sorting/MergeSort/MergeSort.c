@@ -54,19 +54,23 @@ void merge(int mainArr[], int start, int mid, int end){
     // Size of Right Array
     int sizeRight = end - mid;
 
+    // Initialize Temporary Arrays for Dividing
     int left[sizeLeft], right[sizeRight];
 
+    // Insert Left Side of the Array
     for(leftCount = 0; leftCount < sizeLeft; leftCount++){
         left[leftCount] = mainArr[start + leftCount];
     }
+    // Insert Right Side of the Array
     for(rightCount = 0; rightCount < sizeRight; rightCount++){
         right[rightCount] = mainArr[mid + 1 + rightCount];
     }
 
+    // Reset Counts to Zero
     leftCount = 0;
     rightCount = 0;
     mainCount = start;
-
+    
     while(leftCount < sizeLeft && rightCount < sizeRight){
         if(left[leftCount] <= right[rightCount]){
             mainArr[mainCount] = left[leftCount];
