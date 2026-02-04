@@ -71,7 +71,9 @@ void merge(int mainArr[], int start, int mid, int end){
     rightCount = 0;
     mainCount = start;
     
+    // Inserts the Elements and Sorts them back into the Main Array after Division
     while(leftCount < sizeLeft && rightCount < sizeRight){
+        // If left Element is less than Right Element, insert left element and increment left index else vice versa
         if(left[leftCount] <= right[rightCount]){
             mainArr[mainCount] = left[leftCount];
             leftCount++;
@@ -83,6 +85,7 @@ void merge(int mainArr[], int start, int mid, int end){
         mainCount++;
     }
 
+    // Insert Remaining Elements into the Main Array
     while(leftCount < sizeLeft){
         mainArr[mainCount] = left[leftCount];
         leftCount++;
