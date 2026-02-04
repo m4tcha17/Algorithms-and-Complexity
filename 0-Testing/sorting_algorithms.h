@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
+#include <windows.h>
 
 /* ============================================================================
  * UNSORTED DATA ARRAYS FOR TESTING
@@ -113,14 +114,25 @@ void generate_random_array(int arr[], int size, int max_value) {
  * @param arr Array to sort
  * @param size Size of the array
  * @param sort_func Pointer to sorting function
- * @return Execution time in seconds
+ * @return Average execution time in microseconds
  */
 double measure_time(int arr[], int size, void (*sort_func)(int[], int)) {
     clock_t start, end;
+    int iterations = 1000; // Run the sort 1000 times
+    int *temp = malloc(size * sizeof(int));
+    
+    copy_array(arr, temp, size); // Save original array
+    
     start = clock();
-    sort_func(arr, size);
+    for (int i = 0; i < iterations; i++) {
+        copy_array(temp, arr, size); // Reset to original each time
+        sort_func(arr, size);
+    }
     end = clock();
-    return ((double)(end - start)) / CLOCKS_PER_SEC;
+    
+    free(temp);
+    // arr is now sorted from the last iteration
+    return ((double)(end - start)) / CLOCKS_PER_SEC * 1000000 / iterations;
 }
 
 #endif /* SORTING_ALGORITHMS_H */

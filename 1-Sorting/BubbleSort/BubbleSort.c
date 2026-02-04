@@ -80,7 +80,7 @@ int main() {
     printf("After sorting (first 10):  ");
     print_array(test_medium, 10);
     printf("Is sorted: %s\n", is_sorted(test_medium, medium_size) ? "YES" : "NO");
-    printf("Time taken: %.6f seconds\n\n", time_medium);
+    printf("Time taken: %.6f microseconds\n\n", time_medium);
     
     // Test with large dataset
     printf("--- Large Dataset (Size: %d) ---\n", large_size);
@@ -95,7 +95,7 @@ int main() {
     printf("After sorting (first 10):  ");
     print_array(test_large, 10);
     printf("Is sorted: %s\n", is_sorted(test_large, large_size) ? "YES" : "NO");
-    printf("Time taken: %.6f seconds\n\n", time_large);
+    printf("Time taken: %.6f microseconds\n\n", time_large);
     
     // Test with custom random dataset
     printf("--- Custom Random Dataset (Size: 20) ---\n");
