@@ -29,8 +29,90 @@
  * 3. [Step 3]
  * ...
  */
-void variatedMergeSort(int arr[], int size) {
 
+ typedef struct {
+    int *arr;
+    int size;
+} DynamicList;
+
+void variationMergeSort(int[], int, int);
+void merge(int[], int, int, int);
+bool isSorted(int[], int, int);
+
+void sort(int arr[], int size) {
+    // Begin Merge Sort Algorithm
+    DynamicList D; // Declaration
+    D.arr = arr; // Assignment
+    D.size = size; // Assignment
+    variationMergeSort(D.arr, 0, D.size - 1);
+}
+
+// Handles the Recursion of Merge Sort
+void variationMergeSort(int arr[], int start, int end){
+    if(start < end && !isSorted(arr, start, end)){
+        int mid = (start + end) / 2;
+        variationMergeSort(arr, start, mid); // Handles Recursion on left Half
+        variationMergeSort(arr, mid + 1, end); // Handles Recursion on Right Half
+        merge(arr, start, mid, end);
+    }
+}
+
+void merge(int mainArr[], int start, int mid, int end){
+    // Count for Array Indices
+    int leftCount, rightCount, mainCount;
+    int sizeLeft = mid - start + 1; // Size of Left Array
+    int sizeRight = end - mid; // Size of Right Array
+
+    // Initialize Temporary Arrays for Dividing
+    int left[sizeLeft], right[sizeRight];
+
+    // Insert Left Side of the Array
+    for(leftCount = 0; leftCount < sizeLeft; leftCount++){
+        left[leftCount] = mainArr[start + leftCount];
+    }
+    // Insert Right Side of the Array
+    for(rightCount = 0; rightCount < sizeRight; rightCount++){
+        right[rightCount] = mainArr[mid + 1 + rightCount];
+    }
+
+    // Reset Counts to Zero
+    leftCount = 0;
+    rightCount = 0;
+    mainCount = start;
+    
+    // Inserts the Elements and Sorts them back into the Main Array after Division
+    while(leftCount < sizeLeft && rightCount < sizeRight){
+        // If left Element is less than Right Element, insert left element and increment left index else vice versa
+        if(left[leftCount] <= right[rightCount]){
+            mainArr[mainCount] = left[leftCount];
+            leftCount++;
+        }
+        else{
+            mainArr[mainCount] = right[rightCount];
+            rightCount++;
+        }
+        mainCount++;
+    }
+
+    // Insert Remaining Elements into the Main Array
+    while(leftCount < sizeLeft){
+        mainArr[mainCount] = left[leftCount];
+        leftCount++;
+        mainCount++;
+    }
+
+    while(leftCount < sizeRight){
+        mainArr[mainCount] = right[rightCount];
+        rightCount++;
+        mainCount++;
+    }
+}
+
+bool isSorted(int arr[], int start, int end){
+    for(int i = start; i < end; i++){
+        if(arr[i] > arr[i + 1]) return false;
+    }
+    return true;
 }
 
 /* ============================================================================
@@ -50,7 +132,7 @@ int main() {
     printf("Before sorting: ");
     print_array(test_small, small_size);
     
-    algorithm_name_sort(test_small, small_size);
+    sort(test_small, small_size);
     
     printf("After sorting:  ");
     print_array(test_small, small_size);
@@ -64,7 +146,7 @@ int main() {
     printf("Before sorting (first 10): ");
     print_array(test_medium, 10);
     
-    double time_medium = measure_time(test_medium, medium_size, algorithm_name_sort);
+    double time_medium = measure_time(test_medium, medium_size, sort);
     
     printf("After sorting (first 10):  ");
     print_array(test_medium, 10);
@@ -79,7 +161,7 @@ int main() {
     printf("Before sorting (first 10): ");
     print_array(test_large, 10);
     
-    double time_large = measure_time(test_large, large_size, algorithm_name_sort);
+    double time_large = measure_time(test_large, large_size, sort);
     
     printf("After sorting (first 10):  ");
     print_array(test_large, 10);
@@ -94,7 +176,7 @@ int main() {
     printf("Before sorting: ");
     print_array(test_random, 20);
     
-    algorithm_name_sort(test_random, 20);
+    sort(test_random, 20);
     
     printf("After sorting:  ");
     print_array(test_random, 20);

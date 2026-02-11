@@ -41,10 +41,8 @@ void sort(int arr[], int size) {
 void mergeSort(int arr[], int start, int end){
     if(start < end){
         int mid = (start + end) / 2;
-        // Handles Recursion on left Half
-        mergeSort(arr, start, mid);
-        // Handles Recursion on Right Half
-        mergeSort(arr, mid + 1, end);
+        mergeSort(arr, start, mid); // Handles Recursion on left Half
+        mergeSort(arr, mid + 1, end); // Handles Recursion on Right Half
         merge(arr, start, mid, end);
     }
 }
@@ -52,10 +50,8 @@ void mergeSort(int arr[], int start, int end){
 void merge(int mainArr[], int start, int mid, int end){
     // Count for Array Indices
     int leftCount, rightCount, mainCount;
-    // Size of Left Array
-    int sizeLeft = mid - start + 1;
-    // Size of Right Array
-    int sizeRight = end - mid;
+    int sizeLeft = mid - start + 1; // Size of Left Array
+    int sizeRight = end - mid; // Size of Right Array
 
     // Initialize Temporary Arrays for Dividing
     int left[sizeLeft], right[sizeRight];
@@ -95,7 +91,7 @@ void merge(int mainArr[], int start, int mid, int end){
         mainCount++;
     }
 
-    while(leftCount < sizeLeft){
+    while(rightCount < sizeRight){
         mainArr[mainCount] = right[rightCount];
         rightCount++;
         mainCount++;
