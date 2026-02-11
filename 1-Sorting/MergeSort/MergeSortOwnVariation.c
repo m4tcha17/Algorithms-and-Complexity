@@ -2,12 +2,12 @@
  * ============================================================================
  * SORTING ALGORITHM TEMPLATE
  * Course: Algorithms and Complexity
- * Algorithm: [ALGORITHM NAME HERE]
- * Time Complexity:
- *      Best Case: [BEST]
- *      Average Case: [AVERAGE]
- *      Worst Case: [WORST]
- * Space Complexity: [COMPLEXITY]
+ * Algorithm: Merge Sort (Own Variation)
+ * Time Complexity: 
+ *      Best Case: O(n)
+ *      Average Case: O(n log n)
+ *      Worst Case: O(n log n)
+ * Space Complexity: O(n)
  * ============================================================================
  */
 
@@ -29,27 +29,8 @@
  * 3. [Step 3]
  * ...
  */
-void algorithm_name_sort(int arr[], int size) {
-    // TODO: Implement your sorting algorithm here
-    
-    // Example structure:
-    // for (int i = 0; i < size; i++) {
-    //     // Your logic here
-    // }
-}
+void variatedMergeSort(int arr[], int size) {
 
-/* ============================================================================
- * HELPER FUNCTIONS (if needed)
- * ============================================================================ */
-
-/**
- * Helper function description
- * @param arr Array parameter
- * @param left Left index
- * @param right Right index
- */
-void helper_function(int arr[], int left, int right) {
-    // TODO: Implement helper function if needed
 }
 
 /* ============================================================================

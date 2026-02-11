@@ -2,9 +2,12 @@
  * ============================================================================
  * SORTING ALGORITHM TEMPLATE
  * Course: Algorithms and Complexity
- * Algorithm: [ALGORITHM NAME HERE]
- * Time Complexity: [BEST/AVERAGE/WORST CASE]
- * Space Complexity: [COMPLEXITY]
+ * Algorithm: Bubble Sort
+ * Time Complexity:    
+ *      Best Case: O(n)
+ *      Average Case: O(n²)
+ *      Worst Case: O(n²)
+ * Space Complexity: O(1)
  * ============================================================================
  */
 

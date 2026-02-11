@@ -2,9 +2,12 @@
  * ============================================================================
  * SORTING ALGORITHM TEMPLATE
  * Course: Algorithms and Complexity
- * Algorithm: [ALGORITHM NAME HERE]
- * Time Complexity: [BEST/AVERAGE/WORST CASE]
- * Space Complexity: [COMPLEXITY]
+ * Algorithm: Merge Sort
+ * Time Complexity:
+ *      Best Case: O(n log n)
+ *      Average Case: O(n log n)
+ *      Worst Case: O(n log n)
+ * Space Complexity: O(n)
  * ============================================================================
  */
 
