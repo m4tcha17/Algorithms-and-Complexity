@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
-#include <windows.h>
 
 /* ============================================================================
  * UNSORTED DATA ARRAYS FOR TESTING

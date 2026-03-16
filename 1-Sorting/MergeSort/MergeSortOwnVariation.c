@@ -37,24 +37,26 @@
 
 void variationMergeSort(int[], int, int);
 void merge(int[], int, int, int);
-bool isSorted(int[], int, int);
+bool isSorted(int[], int);
 
 void sort(int arr[], int size) {
     // Begin Merge Sort Algorithm
     DynamicList D; // Declaration
     D.arr = arr; // Assignment
     D.size = size; // Assignment
-    variationMergeSort(D.arr, 0, D.size - 1);
+    if(!isSorted(arr, size)){
+        variationMergeSort(D.arr, 0, D.size - 1);
+    }
 }
 
 // Handles the Recursion of Merge Sort
 void variationMergeSort(int arr[], int start, int end){
-    if(start < end && !isSorted(arr, start, end)){
-        int mid = (start + end) / 2;
+    int mid = (start + end) / 2;
+    if(end - start > 1){
         variationMergeSort(arr, start, mid); // Handles Recursion on left Half
         variationMergeSort(arr, mid + 1, end); // Handles Recursion on Right Half
-        merge(arr, start, mid, end);
     }
+    merge(arr, start, mid, end);
 }
 
 void merge(int mainArr[], int start, int mid, int end){
@@ -101,15 +103,15 @@ void merge(int mainArr[], int start, int mid, int end){
         mainCount++;
     }
 
-    while(leftCount < sizeRight){
+    while(rightCount < sizeRight){
         mainArr[mainCount] = right[rightCount];
         rightCount++;
         mainCount++;
     }
 }
 
-bool isSorted(int arr[], int start, int end){
-    for(int i = start; i < end; i++){
+bool isSorted(int arr[], int size){
+    for(int i = 0; i < size; i++){
         if(arr[i] > arr[i + 1]) return false;
     }
     return true;
