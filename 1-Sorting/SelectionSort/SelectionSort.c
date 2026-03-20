@@ -2,12 +2,12 @@
  * ============================================================================
  * SORTING ALGORITHM TEMPLATE
  * Course: Algorithms and Complexity
- * Algorithm: [ALGORITHM NAME HERE]
+ * Algorithm: Selection Sort
  * Time Complexity:
- *      Best Case: [BEST]
- *      Average Case: [AVERAGE]
- *      Worst Case: [WORST]
- * Space Complexity: [COMPLEXITY]
+ *      Best Case: O(n²)
+ *      Average Case: O(n²)
+ *      Worst Case: O(n²)
+ * Space Complexity: O(1)
  * ============================================================================
  */
 
@@ -17,27 +17,19 @@
  * ALGORITHM IMPLEMENTATION
  * ============================================================================ */
 
-void algorithm_name_sort(int arr[], int size) {
-    // TODO: Implement your sorting algorithm here
-    
-    // Example structure:
-    // for (int i = 0; i < size; i++) {
-    //     // Your logic here
-    // }
-}
+void selectionSort(int arr[], int size) {
+    for(int i = 0; i < size - 1; i++){
+        int minIdx = i;
 
-/* ============================================================================
- * HELPER FUNCTIONS (if needed)
- * ============================================================================ */
+        for(int j = i + 1; j < size; j++){
+            int smallest = arr[j];
+            if(arr[j] < arr[minIdx]) minIdx = j;
+        }
 
-/**
- * Helper function description
- * @param arr Array parameter
- * @param left Left index
- * @param right Right index
- */
-void helper_function(int arr[], int left, int right) {
-    // TODO: Implement helper function if needed
+        int temp = arr[minIdx];
+        arr[minIdx] = arr[i];
+        arr[i] = temp;
+    }
 }
 
 /* ============================================================================
@@ -57,7 +49,7 @@ int main() {
     printf("Before sorting: ");
     print_array(test_small, small_size);
     
-    algorithm_name_sort(test_small, small_size);
+    selectionSort(test_small, small_size);
     
     printf("After sorting:  ");
     print_array(test_small, small_size);
@@ -71,7 +63,7 @@ int main() {
     printf("Before sorting (first 10): ");
     print_array(test_medium, 10);
     
-    double time_medium = measure_time(test_medium, medium_size, algorithm_name_sort);
+    double time_medium = measure_time(test_medium, medium_size, selectionSort);
     
     printf("After sorting (first 10):  ");
     print_array(test_medium, 10);
@@ -86,7 +78,7 @@ int main() {
     printf("Before sorting (first 10): ");
     print_array(test_large, 10);
     
-    double time_large = measure_time(test_large, large_size, algorithm_name_sort);
+    double time_large = measure_time(test_large, large_size, selectionSort);
     
     printf("After sorting (first 10):  ");
     print_array(test_large, 10);
@@ -101,7 +93,7 @@ int main() {
     printf("Before sorting: ");
     print_array(test_random, 20);
     
-    algorithm_name_sort(test_random, 20);
+    selectionSort(test_random, 20);
     
     printf("After sorting:  ");
     print_array(test_random, 20);
