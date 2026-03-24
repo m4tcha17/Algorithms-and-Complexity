@@ -29,16 +29,21 @@
  * 3. [Step 3]
  * ...
  */
-#include <stdbool.h>
 void bubbleSort(int arr[], int size) {
+    // swapped check so it doesn't go through unnecessary loops, checks if the array is already sorted
     bool swapped;
+    // iterates through the entire array
     for(int i = 0; i < size - 1; i++){
         swapped = false;
+        // inner loop does the swapping
+        // Note: the reason why j is until size - i - 1 is because every time it sorts a value, it decrements the end because the one above is already sorted
+        // i is the number of currently sorted values so size - i is the number of unsorted values and subtract 1 to get the index
         for(int j = 0; j < size - i - 1; j++){
             if(arr[j] > arr[j + 1]){
                 int temp = arr[j];
                 arr[j] = arr[j + 1];
                 arr[j + 1] = temp;
+                // if no swaps occur, swapped stays as false, meaning the entire array is sorted
                 swapped = true;
             }
         }

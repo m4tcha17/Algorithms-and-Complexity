@@ -18,14 +18,21 @@
  * ============================================================================ */
 
 void insertionSort(int arr[], int size) {
+    // We begin the sort at the second index
     for(int i = 1; i < size; i++){
+        // The key variable holds the value to be sorted
         int key = arr[i];
+        // count variable that goes through the previous indices of key to find where to insert the value that is being help by the key variable
         int j = i - 1;
 
+        // Compares if the value at index j is more than the value at key
+        // Note: this loop also shifts the elements to the right to give space for insertion
         while(j >= 0 && arr[j] > key){
+            // the shifting
             arr[j + 1] = arr[j];
             j--;
         }
+        // This is where the key will be placed in the sorted array
         arr[j + 1] = key;
     }
 }

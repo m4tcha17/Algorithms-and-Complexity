@@ -2,12 +2,14 @@
  * ============================================================================
  * SORTING ALGORITHM TEMPLATE
  * Course: Algorithms and Complexity
- * Algorithm: Selection Sort
+ * Algorithm: Quick Sort
  * Time Complexity:
- *      Best Case: O(n²)
- *      Average Case: O(n²)
+ *      Best Case: O(n log n)
+ *      Average Case: O(n log n)
  *      Worst Case: O(n²)
- * Space Complexity: O(1)
+ * Space Complexity:
+ *      Best Case: O(log n)
+ *      Worst Case: O(n)
  * ============================================================================
  */
 
@@ -16,19 +18,20 @@
 /* ============================================================================
  * ALGORITHM IMPLEMENTATION
  * ============================================================================ */
+void partition(int[], int, int);
+void quickSort(int[], int, int);
+void sort(int arr[], int size) {
+    int high = size - 1;
+    int low = 0;
+    quickSort(arr, low, high);
+}
 
-void selectionSort(int arr[], int size) {
-    for(int i = 0; i < size - 1; i++){
-        int minIdx = i;
+void partition(int arr[], int left, int right) {
+   
+}
 
-        for(int j = i + 1; j < size; j++){
-            if(arr[j] < arr[minIdx]) minIdx = j;
-        }
-
-        int temp = arr[minIdx];
-        arr[minIdx] = arr[i];
-        arr[i] = temp;
-    }
+void quickSort(int arr[], int low, int high){
+    
 }
 
 /* ============================================================================
@@ -48,7 +51,7 @@ int main() {
     printf("Before sorting: ");
     print_array(test_small, small_size);
     
-    selectionSort(test_small, small_size);
+    sort(test_small, small_size);
     
     printf("After sorting:  ");
     print_array(test_small, small_size);
@@ -62,7 +65,7 @@ int main() {
     printf("Before sorting (first 10): ");
     print_array(test_medium, 10);
     
-    double time_medium = measure_time(test_medium, medium_size, selectionSort);
+    double time_medium = measure_time(test_medium, medium_size, sort);
     
     printf("After sorting (first 10):  ");
     print_array(test_medium, 10);
@@ -77,7 +80,7 @@ int main() {
     printf("Before sorting (first 10): ");
     print_array(test_large, 10);
     
-    double time_large = measure_time(test_large, large_size, selectionSort);
+    double time_large = measure_time(test_large, large_size, sort);
     
     printf("After sorting (first 10):  ");
     print_array(test_large, 10);
@@ -92,7 +95,7 @@ int main() {
     printf("Before sorting: ");
     print_array(test_random, 20);
     
-    selectionSort(test_random, 20);
+    sort(test_random, 20);
     
     printf("After sorting:  ");
     print_array(test_random, 20);
