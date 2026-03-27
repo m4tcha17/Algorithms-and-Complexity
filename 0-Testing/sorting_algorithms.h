@@ -6,6 +6,7 @@
 #include <time.h>
 #include <stdbool.h>
 #include <string.h>
+#include <math.h>
 
 /* ============================================================================
  * UNSORTED DATA ARRAYS FOR TESTING

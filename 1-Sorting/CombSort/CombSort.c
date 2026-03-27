@@ -2,10 +2,10 @@
  * ============================================================================
  * SORTING ALGORITHM TEMPLATE
  * Course: Algorithms and Complexity
- * Algorithm: Bubble Sort
- * Time Complexity:    
- *      Best Case: O(n)
- *      Average Case: O(n²)
+ * Algorithm: Comb Sort
+ * Time Complexity:
+ *      Best Case: O(n log n)
+ *      Average Case: Ω(N²/2^p)
  *      Worst Case: O(n²)
  * Space Complexity: O(1)
  * ============================================================================
@@ -17,38 +17,19 @@
  * ALGORITHM IMPLEMENTATION
  * ============================================================================ */
 
-/**
- * [Algorithm Name] - [Brief Description]
- * 
- * @param arr Array to be sorted
- * @param size Size of the array
- * 
- * Algorithm Steps:
- * 1. [Step 1]
- * 2. [Step 2]
- * 3. [Step 3]
- * ...
- */
-void bubbleSort(int arr[], int size) {
-    // swapped check so it doesn't go through unnecessary loops, checks if the array is already sorted
+void combSort(int arr[], int size) {
     bool swapped;
-    // iterates through the entire array
-    for(int i = 0; i < size - 1; i++){
+    for(int gap = floor(size / 1.3); gap >= 1; gap = floor(gap / 1.3) < 1 ? 1 : floor(gap / 1.3)){
         swapped = false;
-        // inner loop does the swapping
-        // Note: the reason why j is until size - i - 1 is because every time it sorts a value, it decrements the end because the one above is already sorted
-        // i is the number of currently sorted values so size - i is the number of unsorted values and subtract 1 to get the index
-        for(int j = 0; j < size - i - 1; j++){
-            if(arr[j] > arr[j + 1]){
-                int temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-                // if no swaps occur, swapped stays as false, meaning the entire array is sorted
-                swapped = true;
+        for(int i = 0; i < size - gap; i++){
+            if(arr[i] > arr[i + gap]){
+                int temp = arr[i];
+                arr[i] = arr[i + gap];
+                arr[i + gap] = temp;
+                if(gap == 1) swapped = true;
             }
         }
-
-        if(swapped == false) break;
+        if(gap == 1 && swapped == false) break;
     }
 }
 
@@ -58,7 +39,7 @@ void bubbleSort(int arr[], int size) {
 
 int main() {
     printf("========================================\n");
-    printf("Testing Bubble Sort\n");
+    printf("Testing [ALGORITHM NAME]\n");
     printf("========================================\n\n");
     
     // Test with small dataset
@@ -69,7 +50,7 @@ int main() {
     printf("Before sorting: ");
     print_array(test_small, small_size);
     
-    bubbleSort(test_small, small_size);
+    combSort(test_small, small_size);
     
     printf("After sorting:  ");
     print_array(test_small, small_size);
@@ -83,7 +64,7 @@ int main() {
     printf("Before sorting (first 10): ");
     print_array(test_medium, 10);
     
-    double time_medium = measure_time(test_medium, medium_size, bubbleSort);
+    double time_medium = measure_time(test_medium, medium_size, combSort);
     
     printf("After sorting (first 10):  ");
     print_array(test_medium, 10);
@@ -98,7 +79,7 @@ int main() {
     printf("Before sorting (first 10): ");
     print_array(test_large, 10);
     
-    double time_large = measure_time(test_large, large_size, bubbleSort);
+    double time_large = measure_time(test_large, large_size, combSort);
     
     printf("After sorting (first 10):  ");
     print_array(test_large, 10);
@@ -113,7 +94,7 @@ int main() {
     printf("Before sorting: ");
     print_array(test_random, 20);
     
-    bubbleSort(test_random, 20);
+    combSort(test_random, 20);
     
     printf("After sorting:  ");
     print_array(test_random, 20);
