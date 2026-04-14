@@ -17,6 +17,7 @@ void Delete(AVL*, int);
 
 // Helper Functions
 int height(AVL);
+int max(int, int);
 // --- New Visualization Functions ---
 void visualizeInorder(AVL T);
 void visualizePreorder(AVL T, int level); // Helper for indented print
@@ -93,6 +94,7 @@ void insertAll(AVL *T, int* arr, int size){
 }
 
 AVL Insert(AVL T, int elem){
+    // Insert at Base Level
     if(T == NULL){
         AVL temp = (AVL)malloc(sizeof(AVL));
         temp->elem = elem;
@@ -101,6 +103,7 @@ AVL Insert(AVL T, int elem){
         temp->height = 0;
         T = temp;
     }
+    // If not base level continue going down through recursion
     else{
         if(T->elem > elem){
             T->LC = Insert(T->LC, elem);
@@ -110,21 +113,24 @@ AVL Insert(AVL T, int elem){
         } 
     }
 
-    T->height = T->LC->height - T->RC->height
+    T->height = 1 + (max(height(T->LC), height(T->RC)));
+
+    // Rotation Logic
+    int BF = height(T->LC) - height(T->RC);
+
+    //Left-Left Case
+    if(BF >? )
 
     return T;
 }
 
 int height(AVL T){
-    int height;
+    if(T != NULL) return T->height;
+    return -1;
+}
 
-    if(T->LC != NULL && T->RC != NULL){
-        height = (T->LC->height < T->RC->height) ? T->RC->height : T->LC->height;
-        height++;
-    }
-    else{
-        
-    }
+int max(int LC, int RC){
+    return (LC < RC) ? RC : LC; 
 }
 
 // ----------------------------------------------------------------
