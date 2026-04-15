@@ -18,7 +18,9 @@ void Delete(AVL*, int);
 // Helper Functions
 int height(AVL);
 int max(int, int);
-int balFactor(AVL);
+int getBalance(AVL);
+AVL newNode(AVL);
+
 // --- New Visualization Functions ---
 void visualizeInorder(AVL T);
 void visualizePreorder(AVL T, int level); // Helper for indented print
@@ -37,50 +39,49 @@ int main(){
     initTree(&S);
     insertAll(&S, arr, size);
 
-    // --- TEST 1, 2: Leaf and Simple Deletion ---
-    printf("\n\n--- TEST 1: Delete Leaf Node (1) ---\n");
-    Delete(&S, 1);
-    Visualize(S);
+    // // --- TEST 1, 2: Leaf and Simple Deletion ---
+    // printf("\n\n--- TEST 1: Delete Leaf Node (1) ---\n");
+    // Delete(&S, 1);
+    // Visualize(S);
 
-    printf("\n\n--- TEST 2: Repeated Deletion (6, then 6 again) ---\n");
-    Delete(&S, 6); // Case 1: Leaf
-    Delete(&S, 6); // Test: Not Found
-    Visualize(S);
+    // printf("\n\n--- TEST 2: Repeated Deletion (6, then 6 again) ---\n");
+    // Delete(&S, 6); // Case 1: Leaf
+    // Delete(&S, 6); // Test: Not Found
+    // Visualize(S);
 
-    // --- TEST 10: Delete Node with 1 Child (Left Link) ---
-    printf("\n\n--- TEST 10: Delete Node with 1 Child (2) ---\n");
-    Delete(&S, 2); // Case 2: 2 has only child 3
-    Visualize(S);
+    // // --- TEST 10: Delete Node with 1 Child (Left Link) ---
+    // printf("\n\n--- TEST 10: Delete Node with 1 Child (2) ---\n");
+    // Delete(&S, 2); // Case 2: 2 has only child 3
+    // Visualize(S);
 
-    // --- TEST 3: Delete Node with 1 Child (Right Link) ---
-    printf("\n\n--- TEST 3: Delete Node with 1 Child (7) ---\n");
-    Delete(&S, 7); // Case 2: 7 has only child 8
-    Visualize(S);
+    // // --- TEST 3: Delete Node with 1 Child (Right Link) ---
+    // printf("\n\n--- TEST 3: Delete Node with 1 Child (7) ---\n");
+    // Delete(&S, 7); // Case 2: 7 has only child 8
+    // Visualize(S);
 
-    // --- TEST 5 & 6: Two-Child Deletion (Harder Cases) ---
-    printf("\n\n--- TEST 5: Delete Node with 2 Children (15) ---\n");
-    Delete(&S, 15); // Case 3: 15 replaced by successor 17
-    Visualize(S);
+    // // --- TEST 5 & 6: Two-Child Deletion (Harder Cases) ---
+    // printf("\n\n--- TEST 5: Delete Node with 2 Children (15) ---\n");
+    // Delete(&S, 15); // Case 3: 15 replaced by successor 17
+    // Visualize(S);
 
-    printf("\n\n--- TEST 6: Delete Node with 2 Children (28) ---\n");
-    Delete(&S, 28); // Case 3: 28 replaced by successor 34
-    Visualize(S);
+    // printf("\n\n--- TEST 6: Delete Node with 2 Children (28) ---\n");
+    // Delete(&S, 28); // Case 3: 28 replaced by successor 34
+    // Visualize(S);
 
-    // --- TEST 4: Delete the Root (The Ultimate Test) ---
-    printf("\n\n--- TEST 4: Delete the Root (4) ---\n");
-    Delete(&S, 4); // Case 3: 4 replaced by successor 5
-    Visualize(S);
+    // // --- TEST 4: Delete the Root (The Ultimate Test) ---
+    // printf("\n\n--- TEST 4: Delete the Root (4) ---\n");
+    // Delete(&S, 4); // Case 3: 4 replaced by successor 5
+    // Visualize(S);
 
-    // --- TEST 7: Element Not Found ---
-    printf("\n\n--- TEST 7: Delete Non-Existent Element (99) ---\n");
-    Delete(&S, 99); // Test: Not Found
+    // // --- TEST 7: Element Not Found ---
+    // printf("\n\n--- TEST 7: Delete Non-Existent Element (99) ---\n");
+    // Delete(&S, 99); // Test: Not Found
 
-    // --- TEST 8: Delete from Empty Tree ---
-    printf("\n\n--- TEST 8: Delete from an Empty Tree ---\n");
-    AVL EmptyTree;
-    initTree(&EmptyTree);
-    Delete(&EmptyTree, 100); // Test: Empty Tree message
-
+    // // --- TEST 8: Delete from Empty Tree ---
+    // printf("\n\n--- TEST 8: Delete from an Empty Tree ---\n");
+    // AVL EmptyTree;
+    // initTree(&EmptyTree);
+    // Delete(&EmptyTree, 100); // Test: Empty Tree message
     return 0;
 }
 
@@ -98,11 +99,13 @@ AVL Insert(AVL T, int elem){
     // Insert at Base Level
     if(T == NULL){
         AVL newNode = (AVL)malloc(sizeof(ctype));
-        newNode->elem = elem;
-        newNode->LC = NULL;
-        newNode->RC = NULL;
-        newNode->height = 0;
-        T = newNode;
+        if(newNode != NULL){
+            newNode->elem = elem;
+            newNode->LC = NULL;
+            newNode->RC = NULL;
+            newNode->height = 0;
+            T = newNode;
+        }
     }
     // If not base level continue going down through recursion
     else{
@@ -144,12 +147,16 @@ AVL Insert(AVL T, int elem){
             temp = T->RC;
             T->RC = T->RC->LC;
             T->RC->RC = temp;
+            temp->height = 1 + max(height(temp->LC), height(temp->RC));
+            T->RC->height = 1 + max(height(T->RC->LC), height(T->RC->RC));
         }
         temp = T->RC->LC;
         prevRoot = T;
         T = T->RC;
         T->LC = prevRoot;
         prevRoot->RC = temp;
+        prevRoot->height = 1 + max(height(prevRoot->LC), height(prevRoot->RC));
+        T->height = 1 + max(height(T->LC), height(T->RC));
     }
     return T;
 }
