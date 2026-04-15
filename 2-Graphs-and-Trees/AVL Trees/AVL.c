@@ -18,6 +18,7 @@ void Delete(AVL*, int);
 // Helper Functions
 int height(AVL);
 int max(int, int);
+int balFactor(AVL);
 // --- New Visualization Functions ---
 void visualizeInorder(AVL T);
 void visualizePreorder(AVL T, int level); // Helper for indented print
@@ -96,12 +97,12 @@ void insertAll(AVL *T, int* arr, int size){
 AVL Insert(AVL T, int elem){
     // Insert at Base Level
     if(T == NULL){
-        AVL temp = (AVL)malloc(sizeof(AVL));
-        temp->elem = elem;
-        temp->LC = NULL;
-        temp->RC = NULL;
-        temp->height = 0;
-        T = temp;
+        AVL newNode = (AVL)malloc(sizeof(ctype));
+        newNode->elem = elem;
+        newNode->LC = NULL;
+        newNode->RC = NULL;
+        newNode->height = 0;
+        T = newNode;
     }
     // If not base level continue going down through recursion
     else{
@@ -116,11 +117,40 @@ AVL Insert(AVL T, int elem){
     T->height = 1 + (max(height(T->LC), height(T->RC)));
 
     // Rotation Logic
-    int BF = height(T->LC) - height(T->RC);
-
-    //Left-Left Case
-    if(BF >? )
-
+    int BF = balFactor(T);
+    AVL temp, prevRoot;
+    //Left-Heavy Case
+    if(BF > 1){
+        //Left-Right
+        if(balFactor(T->LC) < 0){
+            temp = T->LC;
+            T->LC = T->LC->RC;
+            T->LC->LC = temp;
+            temp->height = 1 + max(height(temp->LC), height(temp->RC));
+            T->LC->height = 1 + max(height(T->LC->LC), height(T->LC->RC));
+        }
+        temp = T->LC->RC;
+        prevRoot = T;
+        T = T->LC;
+        T->RC = prevRoot;
+        prevRoot->LC = temp;
+        prevRoot->height = 1 + max(height(prevRoot->LC), height(prevRoot->RC));
+        T->height = 1 + max(height(T->LC), height(T->RC));
+    }
+    // Right-Heavy Case
+    else if(BF < -1){
+        //Right-Left
+        if(balFactor(T->RC) > 0){
+            temp = T->RC;
+            T->RC = T->RC->LC;
+            T->RC->RC = temp;
+        }
+        temp = T->RC->LC;
+        prevRoot = T;
+        T = T->RC;
+        T->LC = prevRoot;
+        prevRoot->RC = temp;
+    }
     return T;
 }
 
@@ -131,6 +161,10 @@ int height(AVL T){
 
 int max(int LC, int RC){
     return (LC < RC) ? RC : LC; 
+}
+
+int balFactor(AVL T){
+    return height(T->LC) - height(T->RC);
 }
 
 // ----------------------------------------------------------------
