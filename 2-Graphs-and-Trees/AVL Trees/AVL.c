@@ -5,21 +5,25 @@
 
 typedef struct cell{
     int elem;
-    struct cell *LC;
-    struct cell *RC;
+    struct cell *left;
+    struct cell *right;
     int height;
 } ctype, *AVL;
 
 void initTree(AVL*);
 void insertAll(AVL*, int[], int);
-AVL Insert(AVL, int);
-void Delete(AVL*, int);
+AVL Insert(AVL*, int);
+AVL Delete(AVL*, int);
 
 // Helper Functions
 int height(AVL);
 int max(int, int);
 int getBalance(AVL);
-AVL newNode(AVL);
+AVL newNode(int);
+
+// Rotation Functions
+void rightRotate(AVL*);
+void leftRotate(AVL*);
 
 // --- New Visualization Functions ---
 void visualizeInorder(AVL T);
@@ -38,11 +42,12 @@ int main(){
     printf("\n--- Test Setup: Initial Full Tree ---\n");
     initTree(&S);
     insertAll(&S, arr, size);
+    Visualize(S);
 
-    // // --- TEST 1, 2: Leaf and Simple Deletion ---
-    // printf("\n\n--- TEST 1: Delete Leaf Node (1) ---\n");
-    // Delete(&S, 1);
-    // Visualize(S);
+    // --- TEST 1, 2: Leaf and Simple Deletion ---
+    printf("\n\n--- TEST 1: Delete Leaf Node (1) ---\n");
+    S = Delete(&S, 1);
+    Visualize(S);
 
     // printf("\n\n--- TEST 2: Repeated Deletion (6, then 6 again) ---\n");
     // Delete(&S, 6); // Case 1: Leaf
@@ -91,87 +96,99 @@ void initTree(AVL *T){
 
 void insertAll(AVL *T, int* arr, int size){
     for(int i = 0; i < size; i++){
-        *T = Insert(*T, arr[i]);
+        *T = Insert(T, arr[i]);
     }
 }
 
-AVL Insert(AVL T, int elem){
-    // Insert at Base Level
-    if(T == NULL){
-        AVL newNode = (AVL)malloc(sizeof(ctype));
-        if(newNode != NULL){
-            newNode->elem = elem;
-            newNode->LC = NULL;
-            newNode->RC = NULL;
-            newNode->height = 0;
-            T = newNode;
-        }
+AVL Insert(AVL* T, int elem){
+    // Once reaches the bottom of the tree
+    if(*T == NULL) return newNode(elem);
+
+    // Traversal to find corrrect spot on AVL Tree
+    if((*T)->elem < elem){
+        (*T)->right = Insert(&(*T)->right, elem);
     }
-    // If not base level continue going down through recursion
-    else{
-        if(T->elem > elem){
-            T->LC = Insert(T->LC, elem);
-        }
-        else{
-            T->RC = Insert(T->RC, elem);
-        } 
+    else if((*T)->elem > elem){
+        (*T)->left = Insert(&(*T)->left, elem);
+    }
+    else return *T;
+
+    // Update Height of the ancestor node
+    (*T)->height = max(height((*T)->left), height((*T)->right)) + 1;
+
+    // Get Balance Factor of the Node to see if it's balanced
+    int balance = getBalance(*T);
+
+    // Rotation Logic and Cases
+    // Left-Heavy
+    if(balance > 1){
+        if(getBalance((*T)->left) < 0) leftRotate(&(*T)->left);
+        rightRotate(T);
     }
 
-    T->height = 1 + (max(height(T->LC), height(T->RC)));
+    // Right-Heavy
+    if(balance < -1){
+        if(getBalance((*T)->right) > 0) rightRotate(&(*T)->right);
+        leftRotate(T);
+    }
 
-    // Rotation Logic
-    int BF = balFactor(T);
-    AVL temp, prevRoot;
-    //Left-Heavy Case
-    if(BF > 1){
-        //Left-Right
-        if(balFactor(T->LC) < 0){
-            temp = T->LC;
-            T->LC = T->LC->RC;
-            T->LC->LC = temp;
-            temp->height = 1 + max(height(temp->LC), height(temp->RC));
-            T->LC->height = 1 + max(height(T->LC->LC), height(T->LC->RC));
-        }
-        temp = T->LC->RC;
-        prevRoot = T;
-        T = T->LC;
-        T->RC = prevRoot;
-        prevRoot->LC = temp;
-        prevRoot->height = 1 + max(height(prevRoot->LC), height(prevRoot->RC));
-        T->height = 1 + max(height(T->LC), height(T->RC));
+    return *T;
+}
+
+AVL Delete(AVL* T, int elem){
+
+}
+
+AVL newNode(int elem){
+    AVL node = (AVL)malloc(sizeof(ctype));
+
+    if(node != NULL){
+        node->elem = elem;
+        node->left = NULL;
+        node->right = NULL;
+        node->height = 0;
     }
-    // Right-Heavy Case
-    else if(BF < -1){
-        //Right-Left
-        if(balFactor(T->RC) > 0){
-            temp = T->RC;
-            T->RC = T->RC->LC;
-            T->RC->RC = temp;
-            temp->height = 1 + max(height(temp->LC), height(temp->RC));
-            T->RC->height = 1 + max(height(T->RC->LC), height(T->RC->RC));
-        }
-        temp = T->RC->LC;
-        prevRoot = T;
-        T = T->RC;
-        T->LC = prevRoot;
-        prevRoot->RC = temp;
-        prevRoot->height = 1 + max(height(prevRoot->LC), height(prevRoot->RC));
-        T->height = 1 + max(height(T->LC), height(T->RC));
-    }
-    return T;
+
+    return node;
+}
+
+void leftRotate(AVL* T){
+    AVL child = (*T)->right;
+    AVL temp = child->left;
+
+    child->left = *T;
+    (*T)->right = temp;
+
+    (*T)->height = max(height((*T)->left), height((*T)->right)) + 1;
+    child->height = max(height(child->left), height(child->right)) + 1;
+
+    *T = child;
+}
+
+void rightRotate(AVL *T){
+    AVL child = (*T)->left;
+    AVL temp = child->right;
+
+    child->right = *T;
+    (*T)->left = temp;
+
+    (*T)->height = max(height((*T)->left), height((*T)->right)) + 1;
+    child->height = max(height(child->left), height(child->right)) + 1;
+
+    *T = child;
 }
 
 int height(AVL T){
-    if(T != NULL) return T->height;
-    return -1;
+    if(T == NULL) return -1;
+    return T->height;
 }
 
-int max(int LC, int RC){
-    return (LC < RC) ? RC : LC; 
+int max(int left, int right){
+    return (left < right) ? right : left; 
 }
 
-int balFactor(AVL T){
-    return height(T->LC) - height(T->RC);
+int getBalance(AVL T){
+    return height(T->left) - height(T->right);
 }
 
 // ----------------------------------------------------------------
@@ -181,16 +198,16 @@ int balFactor(AVL T){
 
 void visualizeInorder(AVL T){
     if (T != NULL){
-        visualizeInorder(T->LC);
+        visualizeInorder(T->left);
         printf("%d ", T->elem);
-        visualizeInorder(T->RC);
+        visualizeInorder(T->right);
     }
 }
 
 void visualizePreorder(AVL T, int level){
     if(T != NULL){
         // Print the right child first (makes the output look like a tree turned 90 degrees left)
-        visualizePreorder(T->RC, level + 1);
+        visualizePreorder(T->right, level + 1);
 
         // Print indentation
         for (int i = 0; i < level; i++){
@@ -201,7 +218,7 @@ void visualizePreorder(AVL T, int level){
         printf("|---%d\n", T->elem);
 
         // Print the left child
-        visualizePreorder(T->LC, level + 1);
+        visualizePreorder(T->left, level + 1);
     }
 }
 
