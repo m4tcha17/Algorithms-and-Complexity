@@ -131,6 +131,7 @@ void Delete(BST *T, int elem){
             trav = predecessor;
         }
         BST temp = *trav;
+        // Chooses which child is NOT NULL and changes that to *trav, if both are NULL, *trav becomes NULL
         *trav = ((*trav)->LC == NULL) ? (*trav)->RC : (*trav)->LC;
         free(temp);
         printf("Deleted element %d...\n", elem);
