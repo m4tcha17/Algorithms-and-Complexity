@@ -1,282 +1,138 @@
-# Algorithms & Complexity Notes
+# Algorithms & Complexity
 
-A comprehensive collection of notes on algorithms, data structures, and computational complexity theory.
+A collection of implementations and notes on algorithms and data structures for my Algorithms & Complexity course at the University of San Carlos.
 
 ## Contents
 
-- [Big O Notation](#big-o-notation)
-- [Common Time Complexities](#common-time-complexities)
 - [Sorting Algorithms](#sorting-algorithms)
-- [Search Algorithms](#search-algorithms)
-- [Data Structures](#data-structures)
-- [Graph Algorithms](#graph-algorithms)
-- [Dynamic Programming](#dynamic-programming)
-- [Complexity Classes](#complexity-classes)
+- [Trees](#trees)
+- [Graphs](#graphs)
+- [Others](#others)
 
-## Big O Notation
-
-Big O notation describes the upper bound of an algorithm's time or space complexity as the input size grows.
-
-**Key Concepts:**
-- **O(1)** - Constant time: execution time doesn't depend on input size
-- **O(log n)** - Logarithmic: typically seen in divide-and-conquer algorithms
-- **O(n)** - Linear: execution time grows directly with input size
-- **O(n log n)** - Linearithmic: common in efficient sorting algorithms
-- **O(n²)** - Quadratic: often seen in nested loops
-- **O(2ⁿ)** - Exponential: typically recursive solutions exploring all combinations
-- **O(n!)** - Factorial: usually brute-force permutation problems
-
-## Common Time Complexities
-
-| Complexity | Name | Example Operations |
-|------------|------|-------------------|
-| O(1) | Constant | Array access, hash table lookup |
-| O(log n) | Logarithmic | Binary search, balanced tree operations |
-| O(n) | Linear | Array traversal, linear search |
-| O(n log n) | Linearithmic | Merge sort, heap sort, quicksort (average) |
-| O(n²) | Quadratic | Bubble sort, insertion sort, selection sort |
-| O(n³) | Cubic | Matrix multiplication (naive) |
-| O(2ⁿ) | Exponential | Recursive fibonacci, subset generation |
-| O(n!) | Factorial | Traveling salesman (brute force) |
+---
 
 ## Sorting Algorithms
 
 ### Quick Sort
-- **Best Time:** O(n log n)
-- **Average Time:** O(n log n)
-- **Worst Time:** O(n²)
+- **Best:** O(n log n) | **Average:** O(n log n) | **Worst:** O(n²)
 - **Space:** O(log n)
-- **Strategy:** Divide-and-conquer using pivot partitioning
+- Divide-and-conquer using pivot partitioning; fast in practice despite worst-case quadratic time.
 
 ### Merge Sort
-- **Best Time:** O(n log n)
-- **Average Time:** O(n log n)
-- **Worst Time:** O(n log n)
+- **Best:** O(n log n) | **Average:** O(n log n) | **Worst:** O(n log n)
 - **Space:** O(n)
-- **Strategy:** Divide array, recursively sort, merge sorted halves
+- Recursively divides the array into halves, sorts each, and merges them back together.
 
 ### Heap Sort
-- **Best Time:** O(n log n)
-- **Average Time:** O(n log n)
-- **Worst Time:** O(n log n)
+- **Best:** O(n log n) | **Average:** O(n log n) | **Worst:** O(n log n)
 - **Space:** O(1)
-- **Strategy:** Build max heap, repeatedly extract maximum
+- Builds a max heap, then repeatedly extracts the maximum to produce a sorted array.
 
 ### Bubble Sort
-- **Best Time:** O(n)
-- **Average Time:** O(n²)
-- **Worst Time:** O(n²)
+- **Best:** O(n) | **Average:** O(n²) | **Worst:** O(n²)
 - **Space:** O(1)
-- **Strategy:** Repeatedly swap adjacent elements if out of order
+- Repeatedly swaps adjacent out-of-order elements; simple but inefficient on large inputs.
 
 ### Insertion Sort
-- **Best Time:** O(n)
-- **Average Time:** O(n²)
-- **Worst Time:** O(n²)
+- **Best:** O(n) | **Average:** O(n²) | **Worst:** O(n²)
 - **Space:** O(1)
-- **Strategy:** Build sorted array one element at a time
+- Builds a sorted array one element at a time; efficient for small or nearly-sorted inputs.
 
 ### Selection Sort
-- **Best Time:** O(n²)
-- **Average Time:** O(n²)
-- **Worst Time:** O(n²)
+- **Best:** O(n²) | **Average:** O(n²) | **Worst:** O(n²)
 - **Space:** O(1)
-- **Strategy:** Repeatedly find minimum element and place it at the beginning
+- Repeatedly finds the minimum element and places it at the front of the unsorted portion.
 
 ### Counting Sort
-- **Best Time:** O(n + k)
-- **Average Time:** O(n + k)
-- **Worst Time:** O(n + k)
-- **Space:** O(k) where k is range of input
-- **Strategy:** Count occurrences of each value, calculate positions
+- **Best:** O(n + k) | **Average:** O(n + k) | **Worst:** O(n + k)
+- **Space:** O(k)
+- Non-comparison sort that counts occurrences of each value; only works on integer ranges.
 
 ### Radix Sort
-- **Best Time:** O(d × (n + k))
-- **Average Time:** O(d × (n + k))
-- **Worst Time:** O(d × (n + k))
-- **Space:** O(n + k) where d is number of digits
-- **Strategy:** Sort by individual digits from least to most significant
+- **Best:** O(d(n + k)) | **Average:** O(d(n + k)) | **Worst:** O(d(n + k))
+- **Space:** O(n + k)
+- Sorts integers digit by digit from least to most significant using a stable sub-sort.
 
 ### Bucket Sort
-- **Best Time:** O(n + k)
-- **Average Time:** O(n + k)
-- **Worst Time:** O(n²)
+- **Best:** O(n + k) | **Average:** O(n + k) | **Worst:** O(n²)
 - **Space:** O(n + k)
-- **Strategy:** Distribute elements into buckets, sort buckets individually
+- Distributes elements into buckets and sorts each bucket individually; works well on uniformly distributed data.
 
-### Shell Sort
-- **Best Time:** O(n log n)
-- **Average Time:** O(n log² n)
-- **Worst Time:** O(n²)
-- **Space:** O(1)
-- **Strategy:** Generalized insertion sort using gap sequences
+---
 
-### Gnome Sort
-- **Best Time:** O(n)
-- **Average Time:** O(n²)
-- **Worst Time:** O(n²)
-- **Space:** O(1)
-- **Strategy:** Similar to insertion sort but uses swaps like bubble sort
+## Trees
 
-### Strand Sort
-- **Best Time:** O(n)
-- **Average Time:** O(n²)
-- **Worst Time:** O(n²)
+### Binary Search Tree (BST)
+- **Insert:** O(log n) avg, O(n) worst | **Delete:** O(log n) avg, O(n) worst | **Search:** O(log n) avg, O(n) worst
 - **Space:** O(n)
-- **Strategy:** Repeatedly extract sorted sublists and merge them
+- A binary tree where each node's left subtree contains smaller values and the right subtree contains larger values. Performance degrades to O(n) on unbalanced inputs.
 
-### Tournament Sort
-- **Best Time:** O(n log n)
-- **Average Time:** O(n log n)
-- **Worst Time:** O(n log n)
+### AVL Tree
+- **Insert:** O(log n) | **Delete:** O(log n) | **Search:** O(log n)
 - **Space:** O(n)
-- **Strategy:** Build tournament tree, repeatedly extract winners
+- A self-balancing BST that maintains a balance factor of -1, 0, or 1 at every node via rotations. Guarantees O(log n) operations at the cost of more frequent rotations compared to Red-Black trees.
 
-### Comb Sort
-- **Best Time:** O(n log n)
-- **Average Time:** O(n²/2^p) where p is number of increments
-- **Worst Time:** O(n²)
-- **Space:** O(1)
-- **Strategy:** Improved bubble sort using gap sequences with shrink factor
+### Red-Black Tree
+- **Insert:** O(log n) | **Delete:** O(log n) | **Search:** O(log n)
+- **Space:** O(n)
+- A self-balancing BST with color properties (red/black) that ensure the tree stays approximately balanced. Fewer rotations than AVL on insertion/deletion; used in many standard library implementations.
 
-## Search Algorithms
+### B-Tree
+- **Insert:** O(log n) | **Delete:** O(log n) | **Search:** O(log n)
+- **Space:** O(n)
+- A generalized balanced tree where nodes can hold multiple keys and children. Designed for disk-based storage systems; minimizes I/O by keeping the tree wide and shallow.
 
-### Binary Search
-- **Time:** O(log n)
-- **Space:** O(1)
-- **Requirements:** Sorted array
-- **Strategy:** Repeatedly divide search interval in half
+### B* Tree
+- **Insert:** O(log n) | **Delete:** O(log n) | **Search:** O(log n)
+- **Space:** O(n)
+- A variant of the B-Tree that requires nodes to be at least 2/3 full instead of 1/2. Delays splits by redistributing keys among siblings, resulting in better space utilization.
 
-### Linear Search
-- **Time:** O(n)
-- **Space:** O(1)
-- **Strategy:** Check each element sequentially
+### B+ Tree
+- **Insert:** O(log n) | **Delete:** O(log n) | **Search:** O(log n)
+- **Space:** O(n)
+- A B-Tree variant where all data is stored in leaf nodes, which are linked together in a linked list. Supports efficient range queries; widely used in database indexing and file systems.
+
+---
+
+## Graphs
 
 ### Depth-First Search (DFS)
-- **Time:** O(V + E)
-- **Space:** O(V)
-- **Use cases:** Path finding, cycle detection, topological sorting
+- **Time:** O(V + E) | **Space:** O(V)
+- Explores as far as possible along each branch before backtracking. Used for cycle detection, connected components, and topological sorting.
 
 ### Breadth-First Search (BFS)
-- **Time:** O(V + E)
-- **Space:** O(V)
-- **Use cases:** Shortest path in unweighted graphs, level-order traversal
+- **Time:** O(V + E) | **Space:** O(V)
+- Explores all neighbors at the current depth before moving to the next level. Finds shortest paths in unweighted graphs.
 
-## Data Structures
-
-### Arrays
-- **Access:** O(1)
-- **Search:** O(n)
-- **Insert/Delete:** O(n)
-
-### Linked Lists
-- **Access:** O(n)
-- **Search:** O(n)
-- **Insert/Delete:** O(1) with pointer
-
-### Hash Tables
-- **Average Access/Insert/Delete:** O(1)
-- **Worst case:** O(n)
-
-### Binary Search Trees
-- **Average Access/Insert/Delete:** O(log n)
-- **Worst case:** O(n)
-
-### Balanced Trees (AVL, Red-Black)
-- **All operations:** O(log n)
-
-### Heaps
-- **Insert:** O(log n)
-- **Delete Max/Min:** O(log n)
-- **Get Max/Min:** O(1)
-
-### Graphs
-- **Adjacency Matrix:** O(V²) space, O(1) edge lookup
-- **Adjacency List:** O(V + E) space, O(degree) edge lookup
-
-## Graph Algorithms
+### Topological Sort
+- **Time:** O(V + E) | **Space:** O(V)
+- A linear ordering of vertices in a DAG such that every directed edge u → v has u before v. Typically implemented via DFS or Kahn's algorithm (BFS-based).
 
 ### Dijkstra's Algorithm
-- **Time:** O((V + E) log V) with priority queue
-- **Purpose:** Shortest path from single source (non-negative weights)
+- **Time:** O((V + E) log V) with a priority queue | **Space:** O(V)
+- Finds the shortest path from a single source to all other vertices. Requires non-negative edge weights; greedy approach using a min-heap.
 
-### Bellman-Ford
-- **Time:** O(VE)
-- **Purpose:** Shortest path with negative weights, detects negative cycles
+### Bellman-Ford Algorithm
+- **Time:** O(VE) | **Space:** O(V)
+- Finds shortest paths from a single source, supporting negative edge weights. Can detect negative weight cycles; slower than Dijkstra but more general.
 
-### Floyd-Warshall
-- **Time:** O(V³)
-- **Purpose:** All-pairs shortest paths
+---
 
-### Kruskal's Algorithm
-- **Time:** O(E log E)
-- **Purpose:** Minimum spanning tree
+## Others
 
-### Prim's Algorithm
-- **Time:** O((V + E) log V)
-- **Purpose:** Minimum spanning tree
+### Skip List
+- **Insert:** O(log n) avg, O(n) worst | **Delete:** O(log n) avg, O(n) worst | **Search:** O(log n) avg, O(n) worst
+- **Space:** O(n log n) avg
+- A probabilistic data structure built from layered sorted linked lists. Higher layers act as express lanes for faster traversal; offers BST-like performance without complex balancing logic.
 
-## Dynamic Programming
+### Floyd-Warshall Algorithm
+- **Time:** O(V³) | **Space:** O(V²)
+- Finds shortest paths between all pairs of vertices using dynamic programming. Handles negative weights and detects negative cycles; best for dense graphs where all-pairs paths are needed.
 
-Dynamic programming solves problems by breaking them into overlapping subproblems and storing results to avoid redundant computation.
+### Johnson's Algorithm
+- **Time:** O(V² log V + VE) | **Space:** O(V²)
+- Computes all-pairs shortest paths by reweighting edges to eliminate negatives, then running Dijkstra from every vertex. More efficient than Floyd-Warshall on sparse graphs with negative weights.
 
-**Classic Problems:**
-- Fibonacci sequence
-- Longest common subsequence
-- Knapsack problem
-- Coin change
-- Edit distance
-- Matrix chain multiplication
-
-**Approaches:**
-- **Top-down (Memoization):** Recursive with caching
-- **Bottom-up (Tabulation):** Iterative, build solution from base cases
-
-## Complexity Classes
-
-### P (Polynomial Time)
-Problems solvable in polynomial time by a deterministic Turing machine.
-
-### NP (Nondeterministic Polynomial Time)
-Problems where solutions can be verified in polynomial time.
-
-### NP-Complete
-Hardest problems in NP. If any NP-complete problem has a polynomial-time solution, then P = NP.
-
-**Examples:** SAT, Traveling Salesman, Graph Coloring, Subset Sum
-
-### NP-Hard
-At least as hard as NP-complete problems, but not necessarily in NP.
-
-## Master Theorem
-
-For recurrence relations of the form: T(n) = aT(n/b) + f(n)
-
-1. If f(n) = O(n^(log_b(a) - ε)), then T(n) = Θ(n^log_b(a))
-2. If f(n) = Θ(n^log_b(a)), then T(n) = Θ(n^log_b(a) × log n)
-3. If f(n) = Ω(n^(log_b(a) + ε)), then T(n) = Θ(f(n))
-
-## Space Complexity
-
-Space complexity measures the total memory used by an algorithm relative to input size.
-
-**Components:**
-- **Auxiliary space:** Extra space used by the algorithm
-- **Input space:** Space taken by the input itself
-
-## Amortized Analysis
-
-Analyzes the average performance of operations over a sequence, accounting for expensive operations that occur infrequently.
-
-**Techniques:**
-- Aggregate method
-- Accounting method
-- Potential method
-
-## Contributing
-
-Feel free to submit pull requests or open issues to improve these notes.
-
-## License
-
-This project is open source and available under the MIT License.
+### Dynamic Programming
+- **Time:** Varies by problem | **Space:** Varies by problem
+- An optimization technique that solves problems by breaking them into overlapping subproblems and storing their results to avoid redundant computation. Can be implemented top-down (memoization) or bottom-up (tabulation). Classic problems include Fibonacci, Knapsack, Longest Common Subsequence, and Coin Change.
