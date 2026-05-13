@@ -75,4 +75,11 @@ dkms.conf
 .history
 .ionide
 
+# CMake
+CMakeLists.txt
+CMakeFiles/
+cmake_install.cmake
+CMakeCache.txt
+build/
+
 # End of https://www.toptal.com/developers/gitignore/api/c,visualstudiocode
